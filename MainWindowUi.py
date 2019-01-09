@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QFileDialog
+import matplotlib.pyplot as plt
 import User
 import cihui
 import duanluo
@@ -86,6 +87,8 @@ class LeftTabWidget(QWidget):
         self.userWidget.pushButton_SetPhoto.clicked.connect(self.openPhoto)
         self.duanluoWidget.OCRButton.clicked.connect(self.ImageOcr)
         self.duanluoWidget.pushButton_EA.clicked.connect(self.EEButton)
+        self.cihuiWidget.wordCloud.clicked.connect(self.WDEvent)
+        self.cihuiWidget.Table.clicked.connect(self.WDEvent)
 
 
     def _setup_ui(self):
@@ -136,6 +139,7 @@ class LeftTabWidget(QWidget):
         ext = getExt(openfile_name)
         if (ext == '.jpg' or ext == '.png' or ext == '.JPG' or ext == '.PNG'):
             self.cihuiWidget.setPhoto(openfile_name)
+            self.userControl.backImage = getFile(openfile_name)
 
     def ImageOcr(self):
         openfile_name, fileType = QFileDialog.getOpenFileName(self, '选择文件', '', '*.jpg;;*.png')
@@ -153,17 +157,24 @@ class LeftTabWidget(QWidget):
         point = self.serve.getPoint('ee.txt', self.userControl.getUsername())
         self.duanluoWidget.Label_SetNum.setText(point)
 
-def main():
-    ''' '''
-    app = QApplication(sys.argv)
+    def WDEvent(self):
+        self.serve.getWDAndFre(self.userControl.workFile, self.userControl.backImage, self.userControl.getUsername())
+        imgName = getName(self.userControl.workFile)+ 'wc.png'
+        print(imgName)
+        img = plt.imread(imgName)
+        plt.imshow(img)
 
-    main_wnd = LeftTabWidget('test','test')
-    main_wnd.show()
-
-    # win = MainWindow()
-    # win.show()
-    app.exec()
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     ''' '''
+#     app = QApplication(sys.argv)
+#
+#     main_wnd = LeftTabWidget('test','test')
+#     main_wnd.show()
+#
+#     # win = MainWindow()
+#     # win.show()
+#     app.exec()
+#
+#
+# if __name__ == '__main__':
+#     main()

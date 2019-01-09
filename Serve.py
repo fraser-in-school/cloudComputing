@@ -1,6 +1,7 @@
 from ssh import *
-from ftp import uploadfile, downloadfile, ftpconnect
+from ftp import uploadfile, downloadfile, ftpconnect,downloadfileByfullpath
 import time
+from strProcess import *
 
 def getTime():
     timeStamp = int(time.time())
@@ -64,6 +65,14 @@ class Serve:
     def writeFileAtWorkSpace(self, username, text, filename):
         writeFileAny('ee.txt', '/usr/cloudComputing/users/'+ username  + '/workSpace/', text, self.ssh )
 
+    def getWDAndFre(self, workFile, backImage, username):
+        inputFile = '/usr/cloudComputing/users/'+ username  + '/workSpace/' + workFile
+        print("i= "+inputFile)
+        runSeg(inputFile, ' /usr/cloudComputing/users/'+ username  + '/workSpace/' + backImage,
+               username, ' /usr/cloudComputing/users/'+ username  + '/workSpace/', self.ssh)
+        downloadfileByfullpath(self.ftp, cutExt(inputFile) + 'wc.png', getName(inputFile)+ 'wc.png' )
+        downloadfileByfullpath(self.ftp, cutExt(inputFile) + 'Fre.txt', getName(inputFile) + 'Fre.txt')
+        #downloadfile(self.ftp, )
 
 
 class UserControl:
@@ -73,7 +82,8 @@ class UserControl:
         #本机的工作目录
         self.workDir = os.getcwd()
         #远程的工作文件
-        self.workFile = ''
+        self.workFile = 'report.txt'
+        self.backImage = 'timg.jpg'
 
     def getUsername(self):
         return self.username
@@ -89,7 +99,8 @@ class UserControl:
 #Test
 
 serve = Serve()
-print(serve.getPoint('ee.txt','test'))
+#print(serve.getPoint('ee.txt','test'))
+serve.getWDAndFre('report.txt', 'timg.jpg', 'test')
 #chmodDir('test3',serve.ssh)
 #serve.register( 'test', 'test')
 #serve.writeFileAtWorkSpace('test','北京理工大学BEIJING INSTITUTE OF TECHNOLOGY姓名:张浩性别:男编号:1120161903单位:计算机学院', 'ee.txt')

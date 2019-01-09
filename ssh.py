@@ -78,6 +78,11 @@ def runEE(filename, username, ssh, path = '/usr/cloudComputing/users/'):
         point = point + i
     return point
 
+def runSeg(inputfile, backImage, username, workPath, ssh, path = '/usr/cloudComputing/users/'):
+    command = 'python36 /usr/cloudComputing/Segmentation.py -i ' + inputfile + ' -p ' + backImage + ' -pa ' + workPath
+    print(command)
+    stdin, stdout, stderr = ssh.exec_command(command)
+
 # def copeFile(filename, username, passwd, ssh, path='/usr/cloudComputing/users/'):
 #     file = open("passwd.txt","w")
 #     file.write(passwd)
@@ -86,8 +91,8 @@ def runEE(filename, username, ssh, path = '/usr/cloudComputing/users/'):
 #                        'root@39.105.204.20:/usr/cloudComputing/users/test passwd=zh@cloud1903')
 
 #
-ssh = InitSSH()
-print(runEE('test.txt', 'test',ssh))
+#ssh = InitSSH()
+
 #runOCR('test2.jpg','test',ssh)
 #print(getUsersList(ssh))
 # li = getUsersList(ssh)

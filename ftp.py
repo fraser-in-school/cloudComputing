@@ -34,19 +34,28 @@ def downloadfile(ftp, filename, remotepath, localpath):
 	ftp.set_debuglevel(0) #关闭调试
 	fp.close()
 
+def downloadfileByfullpath(ftp, remotepath, localpath):
+    bufsize = 1024  # 设置缓冲块大小
+    fp = open(localpath, 'wb')
+    ftp.retrbinary('RETR ' + remotepath, fp.write, bufsize)  # 接收服务器上文件并写入本地文件
+    ftp.set_debuglevel(0)  # 关闭调试
+    fp.close()
+
 #Test
 
 ftp = ftpconnect("39.105.204.20","ftpuser2","ftpuser2")
 # # downloadfile(ftp, 'NLPTest.py','/usr/cloudComputing/', '' )
 # # #uploadfile(ftp,"baidu.py","E:\\Study\\ProfessionalCourse\\Python项目\\OCR\\baidu.py")
-uploadfile(ftp,"/usr/cloudComputing/test2.jpg","test2.jpg")
+# uploadfile(ftp,"/usr/cloudComputing/test2.jpg","test2.jpg")
 uploadfile(ftp,"/usr/cloudComputing/baidu.py","baidu.py")
 uploadfile(ftp,"/usr/cloudComputing/Common.py","Common.py")
 uploadfile(ftp,"/usr/cloudComputing/Segmentation.py","Segmentation.py")
 uploadfile(ftp,"/usr/cloudComputing/Emotion_Evaluation.py","Emotion_Evaluation.py")
 uploadfile(ftp,"/usr/cloudComputing/strProcess.py","strProcess.py")
-uploadfile(ftp,"/usr/cloudComputing/dict/neg.txt","dict/neg.txt")
-uploadfile(ftp,"/usr/cloudComputing/dict/no.txt","dict/no.txt")
-uploadfile(ftp,"/usr/cloudComputing/dict/plus.txt","dict/plus.txt")
-uploadfile(ftp,"/usr/cloudComputing/dict/pos.txt","dict/pos.txt")
+# uploadfile(ftp,"/usr/cloudComputing/dict/neg.txt","dict/neg.txt")
+# uploadfile(ftp,"/usr/cloudComputing/dict/no.txt","dict/no.txt")
+# uploadfile(ftp,"/usr/cloudComputing/dict/plus.txt","dict/plus.txt")
+# uploadfile(ftp,"/usr/cloudComputing/dict/pos.txt","dict/pos.txt")
 
+uploadfile(ftp,"/usr/cloudComputing/sanguojiexuan.txt","sanguojiexuan.txt")
+uploadfile(ftp,"/usr/cloudComputing/report.txt","report.txt")

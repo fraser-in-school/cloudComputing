@@ -36,3 +36,9 @@ def listToStr(li):
     for i in li:
         str = str + i
     return str
+
+def cutExt(fullpath):
+    path, filename = os.path.split(fullpath)
+    path = path + '/'
+    name, ext = os.path.splitext(filename)
+    return path + name
